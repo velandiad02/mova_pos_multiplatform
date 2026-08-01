@@ -13,6 +13,9 @@ dependencies {
     implementation(libs.kotlinx.coroutinesSwing)
 
     implementation(libs.compose.uiToolingPreview)
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
 }
 
 compose.desktop {
