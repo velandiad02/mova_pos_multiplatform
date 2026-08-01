@@ -3,5 +3,5 @@ package com.example.mova_pos_multiplatform.feature.commerce_terminal.domain.mode
 data class Commerce(
     val id: String,
     val name: String,
-    val taxId: String? = null,
+    val nit: String? = null,
 )
