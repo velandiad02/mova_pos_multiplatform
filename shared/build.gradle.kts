@@ -59,6 +59,11 @@ kotlin {
             implementation(libs.kotlin.serialization)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+
+            implementation("org.jetbrains.compose.material:material-icons-extended:1.6.11")
+            api("com.arkivanov.decompose:decompose:3.2.2")
+            api("com.arkivanov.decompose:extensions-compose:3.2.2")
+            implementation("com.arkivanov.essenty:lifecycle-coroutines:2.5.0")
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.java)
