@@ -27,7 +27,6 @@ class DefaultCommerceTerminalComponent(
 
     private val scope = coroutineScope(Dispatchers.Main.immediate)
 
-
     private var observeTerminalsJob: Job? = null
 
     private val _model = MutableValue(CommerceTerminalComponent.Model(isRefreshing = true))
@@ -105,7 +104,6 @@ class DefaultCommerceTerminalComponent(
 
     override fun onStartCashRegisterClicked() {
         if (!model.value.canStart) return
-        // TODO: persistir selectedCommerce/selectedTerminal en estado/sesión global
         onNavigateToHistory()
     }
 

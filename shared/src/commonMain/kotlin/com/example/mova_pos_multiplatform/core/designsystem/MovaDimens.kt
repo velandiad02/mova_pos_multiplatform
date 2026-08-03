@@ -20,10 +20,25 @@ object MovaRadius {
 
 object MovaSize {
     val buttonHeight = 56.dp
+    val loadingHeight = 60.dp
+
     val touchTarget = 48.dp
     val iconMedium = 24.dp
     val iconLarge = 40.dp
-
+    val iconSmall = 20.dp
+    val strokeThin = 2.dp
     val contentMaxWidthCompact = 480.dp
     val contentMaxWidthExpanded = 720.dp
+}
+
+object MovaBorder {
+    val idle = 1.dp
+    val focused = 2.dp
+}
+
+object MovaOpacity {
+    const val selectedTint = 0.08f
+    const val borderIdle = 0.2f
+    const val disabledContent = 0.5f
+    const val mutedContent = 0.6f
 }

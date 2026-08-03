@@ -11,9 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/**
- * Paleta central. Cambia acá, no en cada Composable.
- */
+
 private val MovaPrimary = Color(0xFF1E5AFF)
 private val MovaPrimaryDark = Color(0xFF3D7CFF)
 
@@ -21,7 +19,6 @@ private val MovaSuccess = Color(0xFF1FAA59)
 private val MovaWarning = Color(0xFFF2A93B)
 private val MovaError = Color(0xFFE0453C)
 
-/** Colores semánticos de estado de transacción, usados en Vista 4 y Vista 6 (badges). */
 object MovaStatusColors {
     val completed = MovaSuccess
     val pendingSync = MovaWarning
@@ -41,24 +38,21 @@ private val DarkColors = darkColorScheme(
 )
 
 private val MovaTypography = Typography(
-    headlineLarge = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Bold),   // Ej: monto grande en Vista 2
+    headlineLarge = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Bold),
     headlineMedium = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.SemiBold),
-    titleLarge = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.SemiBold),  // Títulos de pantalla
+    titleLarge = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.SemiBold),
     bodyLarge = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
     bodyMedium = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal),
-    labelLarge = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium),    // Texto de botones
+    labelLarge = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium),
 )
 
-/**
- * Punto único de entrada del tema. Envuelve toda la app (una sola vez, en el root).
- */
 @Composable
 fun MovaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colorScheme = if (darkTheme) DarkColors else LightColors,
+        colorScheme = LightColors,
         typography = MovaTypography,
         content = content
     )

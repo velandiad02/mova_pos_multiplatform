@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +18,7 @@ import com.example.mova_pos_multiplatform.core.designsystem.MovaSpacing
 @Composable
 fun MovaScreenScaffold(
     windowSize: MovaWindowSize,
-    title: String,
+    title: String? = null,
     modifier: Modifier = Modifier,
     actions: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
@@ -29,14 +29,18 @@ fun MovaScreenScaffold(
         MovaSize.contentMaxWidthCompact
     }
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
+    val topBar: @Composable () -> Unit = {
+        if (title != null) {
+            CenterAlignedTopAppBar(
                 title = { Text(title) },
                 actions = { actions() },
             )
-        },
+        }
+    }
+
+    Scaffold(
+        modifier = modifier,
+        topBar = topBar,
     ) { paddingValues ->
         Box(
             modifier = Modifier
