@@ -7,6 +7,8 @@ interface TerminalRepository {
 
     fun observeTerminalsByCommerceId(commerceId: String): Flow<List<Terminal>>
 
+    suspend fun getTerminalById(id: String): Result<Terminal>
+
     suspend fun syncTerminalsForCommerce(commerceId: String): Result<Unit>
 
     suspend fun deleteAllTerminals(): Result<Unit>

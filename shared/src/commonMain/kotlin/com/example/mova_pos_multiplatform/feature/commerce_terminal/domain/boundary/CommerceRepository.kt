@@ -7,5 +7,7 @@ interface CommerceRepository {
 
     fun observeCommerces(): Flow<List<Commerce>>
 
+    suspend fun getCommerceById(id: String): Result<Commerce>
+
     suspend fun refreshCommerces(forceRefresh: Boolean): Result<Unit>
 }

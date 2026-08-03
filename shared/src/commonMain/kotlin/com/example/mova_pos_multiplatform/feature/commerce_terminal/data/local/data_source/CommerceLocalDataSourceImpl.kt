@@ -1,6 +1,6 @@
 package com.example.mova_pos_multiplatform.feature.commerce_terminal.data.local.data_source
 
-import com.example.mova_pos_multiplatform.core.common.runLocalCatching
+import com.example.mova_pos_multiplatform.core.common.utils.runLocalCatching
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.data.local.dao.CommerceDao
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.data.local.mapper.toDomain
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.data.local.mapper.toEntity
@@ -18,6 +18,10 @@ class CommerceLocalDataSourceImpl(
             .observeCommerces()
             .map { entities -> entities.map { it.toDomain() } }
             .catch { emit(value = emptyList()) }
+
+    override suspend fun getCommerceById(id: String): Result<Commerce> = runLocalCatching {
+        commerceDao.getCommerceById(id = id).toDomain()
+    }
 
     override suspend fun isEmpty(): Result<Boolean> = runLocalCatching {
         !commerceDao.hasCommerces()

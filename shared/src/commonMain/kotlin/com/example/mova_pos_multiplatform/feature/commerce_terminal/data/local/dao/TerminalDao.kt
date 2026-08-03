@@ -17,6 +17,9 @@ interface TerminalDao {
     @Query(value = "SELECT EXISTS(SELECT 1 FROM terminals WHERE commerceId = :commerceId)")
     suspend fun hasTerminals(commerceId: String): Boolean
 
+    @Query(value = "SELECT * FROM terminals WHERE id = :id")
+    suspend fun getTerminalById(id: String): TerminalEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveTerminals(terminals: List<TerminalEntity>)
 

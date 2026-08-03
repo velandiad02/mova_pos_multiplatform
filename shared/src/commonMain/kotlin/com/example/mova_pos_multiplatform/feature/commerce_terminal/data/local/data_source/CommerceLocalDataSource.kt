@@ -7,6 +7,8 @@ interface CommerceLocalDataSource {
 
     fun observeCommerces(): Flow<List<Commerce>>
 
+    suspend fun getCommerceById(id: String): Result<Commerce>
+
     suspend fun isEmpty(): Result<Boolean>
 
     suspend fun replaceAllCommerces(commerces: List<Commerce>): Result<Unit>

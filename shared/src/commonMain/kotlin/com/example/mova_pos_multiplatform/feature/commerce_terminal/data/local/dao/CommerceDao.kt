@@ -17,6 +17,9 @@ interface CommerceDao {
     @Query(value = "SELECT EXISTS(SELECT 1 FROM commerces)")
     suspend fun hasCommerces(): Boolean
 
+    @Query(value = "SELECT * FROM commerces WHERE id = :id")
+    suspend fun getCommerceById(id: String): CommerceEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveCommerces(commerces: List<CommerceEntity>)
 

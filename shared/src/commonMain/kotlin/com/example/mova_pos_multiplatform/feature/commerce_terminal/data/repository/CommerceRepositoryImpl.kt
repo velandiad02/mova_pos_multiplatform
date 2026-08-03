@@ -16,6 +16,11 @@ class CommerceRepositoryImpl(
 
     override fun observeCommerces(): Flow<List<Commerce>> = localDataSource.observeCommerces()
 
+    override suspend fun getCommerceById(id: String): Result<Commerce> =
+        withContext(context = ioDispatcher) {
+            localDataSource.getCommerceById(id = id)
+        }
+
     override suspend fun refreshCommerces(forceRefresh: Boolean): Result<Unit> =
         withContext(context = ioDispatcher) {
             val isEmpty = localDataSource.isEmpty().getOrDefault(defaultValue = false)
