@@ -7,6 +7,8 @@ interface TerminalLocalDataSource {
 
     fun observeTerminalsByCommerceId(commerceId: String): Flow<List<Terminal>>
 
+    suspend fun getTerminalById(id: String): Result<Terminal>
+
     suspend fun isEmpty(commerceId: String): Result<Boolean>
 
     suspend fun replaceTerminalsByCommerce(

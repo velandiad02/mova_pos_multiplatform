@@ -7,10 +7,13 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.extensions.compose.lifecycle.LifecycleController
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.example.mova_pos_multiplatform.core.di.initKoin
+import com.example.mova_pos_multiplatform.core.di.schedulerModule
 import com.example.mova_pos_multiplatform.root.DefaultRootComponent
 
 fun main() {
-    initKoin()
+    initKoin {
+        modules(schedulerModule)
+    }
 
     val lifecycle = LifecycleRegistry()
 

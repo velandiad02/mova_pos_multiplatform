@@ -12,6 +12,8 @@ fun initKoin(config: KoinAppDeclaration? = null) {
             dispatcherModule,
             dataModule,
             domainModule,
+            hardwareModule,
+            serviceModule,
         )
     }
 }

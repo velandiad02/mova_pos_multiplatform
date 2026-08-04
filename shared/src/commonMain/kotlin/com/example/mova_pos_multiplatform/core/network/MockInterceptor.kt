@@ -2,9 +2,12 @@ package com.example.mova_pos_multiplatform.core.network
 
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.data.remote.dto.CommerceResponseDto
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.data.remote.dto.TerminalResponseDto
+import com.example.mova_pos_multiplatform.feature.transactions.data.remote.dto.TransactionRequestDto
+import com.example.mova_pos_multiplatform.feature.transactions.data.remote.dto.TransactionResponseDto
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
+import io.ktor.content.TextContent
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
@@ -32,6 +35,8 @@ val terminals = mutableListOf(
     TerminalResponseDto(id = "t-403", commerceId = "c-004", name = "POS-AUTOSERVICIO")
 )
 
+val processedTransactions = mutableMapOf<String, TransactionResponseDto>()
+
 fun getMockEngine(): MockEngine = MockEngine { request ->
     delay(timeMillis = 3000)
 
@@ -55,6 +60,55 @@ fun getMockEngine(): MockEngine = MockEngine { request ->
                 status = HttpStatusCode.OK,
                 headers = responseHeaders,
             )
+        }
+        path == "/transactions" -> {
+            try {
+                val requestBody = (request.body as TextContent).text
+                val transactionRequest = Json.decodeFromString<TransactionRequestDto>(requestBody)
+                val idempotencyKey = transactionRequest.idempotencyKey
+                val amount = transactionRequest.amount.amountInMinimumUnit
+
+                if (processedTransactions.containsKey(idempotencyKey)) {
+                    return@MockEngine respond(
+                        content = Json.encodeToString(value = processedTransactions[idempotencyKey]),
+                        status = HttpStatusCode.OK,
+                        headers = responseHeaders,
+                    )
+                }
+
+                when (amount) {
+                    20000L -> {
+                        val response = TransactionResponseDto(status = "REJECTED")
+                        processedTransactions[idempotencyKey] = response
+                        respond(
+                            content = Json.encodeToString(value = response),
+                            status = HttpStatusCode.OK,
+                            headers = responseHeaders,
+                        )
+                    }
+
+                    30000L -> {
+                        respondError(status = HttpStatusCode.ServiceUnavailable)
+                    }
+
+                    40000L -> {
+                        delay(timeMillis = 15000)
+                        respondError(status = HttpStatusCode.GatewayTimeout)
+                    }
+
+                    else -> {
+                        val response = TransactionResponseDto(status = "APPROVED")
+                        processedTransactions[idempotencyKey] = response
+                        respond(
+                            content = Json.encodeToString(value = response),
+                            status = HttpStatusCode.OK,
+                            headers = responseHeaders,
+                        )
+                    }
+                }
+            } catch (_: Exception) {
+                respondError(status = HttpStatusCode.BadRequest)
+            }
         }
         else -> respondError(status = HttpStatusCode.NotFound)
     }

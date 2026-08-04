@@ -1,6 +1,8 @@
-package com.example.mova_pos_multiplatform.core.common
+package com.example.mova_pos_multiplatform.core.common.utils
 
 import androidx.sqlite.SQLiteException
+import com.example.mova_pos_multiplatform.core.common.error.AppException
+import com.example.mova_pos_multiplatform.core.common.error.ErrorStatus
 
 suspend inline fun <T> runLocalCatching(crossinline block: suspend () -> T): Result<T> {
     return runCatching {
@@ -11,6 +13,6 @@ suspend inline fun <T> runLocalCatching(crossinline block: suspend () -> T): Res
             else -> "Error inesperado: ${error.message}"
         }
 
-        throw Exception(message)
+        throw AppException(message = message, status = ErrorStatus.LOCAL_STORAGE)
     }
 }

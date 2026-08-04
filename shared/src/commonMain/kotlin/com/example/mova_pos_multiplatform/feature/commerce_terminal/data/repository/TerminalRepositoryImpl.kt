@@ -17,6 +17,11 @@ class TerminalRepositoryImpl(
     override fun observeTerminalsByCommerceId(commerceId: String): Flow<List<Terminal>> =
         localDataSource.observeTerminalsByCommerceId(commerceId = commerceId)
 
+    override suspend fun getTerminalById(id: String): Result<Terminal> =
+        withContext(context = ioDispatcher) {
+            localDataSource.getTerminalById(id = id)
+        }
+
     override suspend fun syncTerminalsForCommerce(commerceId: String): Result<Unit> =
         withContext(context = ioDispatcher) {
             val isEmpty = localDataSource

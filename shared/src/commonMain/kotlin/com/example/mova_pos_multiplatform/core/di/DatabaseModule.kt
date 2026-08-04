@@ -5,6 +5,7 @@ import com.example.mova_pos_multiplatform.core.database.MovaDatabase
 import com.example.mova_pos_multiplatform.core.database.getDatabaseBuilder
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.data.local.dao.CommerceDao
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.data.local.dao.TerminalDao
+import com.example.mova_pos_multiplatform.feature.transactions.data.local.dao.TransactionDao
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -24,5 +25,9 @@ val databaseModule = module {
 
     single<TerminalDao> {
         get<MovaDatabase>().getTerminalDao()
+    }
+
+    single<TransactionDao> {
+        get<MovaDatabase>().getTransactionDao()
     }
 }
