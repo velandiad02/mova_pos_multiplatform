@@ -9,7 +9,6 @@ class SyncTransactionsUseCase(
 ) {
 
     suspend operator fun invoke(terminalId: String, mustSaveErrors: Boolean): Result<Unit> {
-        repository.unMarkTransactionsAsFailed(terminalId = terminalId)
         var finalException: AppException? = null
 
         while (true) {

@@ -6,6 +6,9 @@ import com.example.mova_pos_multiplatform.feature.transactions.data.local.mapper
 import com.example.mova_pos_multiplatform.feature.transactions.data.local.mapper.toEntity
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.TransactionStatus
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 
 class TransactionLocalDataSourceImpl(
     private val transactionDao: TransactionDao,
@@ -19,13 +22,11 @@ class TransactionLocalDataSourceImpl(
             ).map { it.toDomain() }
         }
 
-    override suspend fun getTransactionsByTerminalId(terminalId: String?): Result<List<Transaction>> =
-        runLocalCatching {
-            val transactions = terminalId?.let { transactionDao.getTransactionsByTerminalId(terminalId = it) }
-                ?: transactionDao.getTransactionsByTerminalId()
-
-            transactions.map { it.toDomain() }
-        }
+    override fun observeTransactionsByTerminalId(terminalId: String): Flow<List<Transaction>> =
+        transactionDao
+            .observeTransactionsByTerminalId(terminalId = terminalId)
+            .map { entities -> entities.map { it.toDomain() } }
+            .catch { emit(value = emptyList()) }
 
     override suspend fun saveTransaction(transaction: Transaction): Result<Unit> =
         runLocalCatching {

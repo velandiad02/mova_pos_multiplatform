@@ -2,12 +2,13 @@ package com.example.mova_pos_multiplatform.feature.transactions.data.local.data_
 
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.TransactionStatus
+import kotlinx.coroutines.flow.Flow
 
 interface TransactionLocalDataSource {
 
     suspend fun getPendingTransactions(terminalId: String): Result<List<Transaction>>
 
-    suspend fun getTransactionsByTerminalId(terminalId: String? = null): Result<List<Transaction>>
+    fun observeTransactionsByTerminalId(terminalId: String): Flow<List<Transaction>>
 
     suspend fun saveTransaction(transaction: Transaction): Result<Unit>
 

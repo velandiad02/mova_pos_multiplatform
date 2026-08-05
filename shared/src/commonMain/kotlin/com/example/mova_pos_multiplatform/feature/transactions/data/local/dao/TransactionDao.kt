@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.mova_pos_multiplatform.feature.transactions.data.local.entity.TransactionEntity
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.TransactionStatus
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TransactionDao {
@@ -15,7 +16,7 @@ interface TransactionDao {
     suspend fun getAllTransactions(): List<TransactionEntity>
 
     @Query(value = "SELECT * FROM transactions WHERE terminalId = :terminalId")
-    suspend fun getTransactionsByTerminalId(terminalId: String): List<TransactionEntity>
+    fun observeTransactionsByTerminalId(terminalId: String): Flow<List<TransactionEntity>>
 
     @Query(value = "SELECT * FROM transactions WHERE status = :status AND terminalId = :terminalId")
     suspend fun getTransactionsBySyncStatus(status: TransactionStatus, terminalId: String): List<TransactionEntity>
