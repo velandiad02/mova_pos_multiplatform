@@ -62,7 +62,6 @@ fun TransactionDetailContent(component: TransactionDetailComponent) {
                                     text = "Imprimir Recibo",
                                     onClick = component::onPrintReceiptClicked,
                                     loading = model.isPrinting,
-                                    modifier = Modifier.fillMaxWidth(),
                                 )
                             }
                         }
