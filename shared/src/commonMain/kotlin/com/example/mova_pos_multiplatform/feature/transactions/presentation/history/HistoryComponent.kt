@@ -19,5 +19,5 @@ interface HistoryComponent {
     }
 
     fun onRetrySyncClicked()
-    fun onTransactionClicked(id: String)
+    fun onTransactionClicked(transaction: Transaction)
 }

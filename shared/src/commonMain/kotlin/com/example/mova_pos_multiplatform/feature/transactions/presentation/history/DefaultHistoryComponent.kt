@@ -5,6 +5,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.GetTransactionsByTerminalUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.RetryPendingTransactionsUseCase
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,7 @@ class DefaultHistoryComponent(
     private val terminalId: String,
     private val observeTransactionsUseCase: GetTransactionsByTerminalUseCase,
     private val retrySyncTransactionsUseCase: RetryPendingTransactionsUseCase,
-    private val onNavigateToDetail: (String) -> Unit,
+    private val onNavigateToDetail: (Transaction) -> Unit,
 ) : HistoryComponent, ComponentContext by componentContext {
 
     private val scope = coroutineScope(context = Dispatchers.Main.immediate)
@@ -59,7 +60,7 @@ class DefaultHistoryComponent(
         }
     }
 
-    override fun onTransactionClicked(id: String) {
-        onNavigateToDetail(id)
+    override fun onTransactionClicked(transaction: Transaction) {
+        onNavigateToDetail(transaction)
     }
 }

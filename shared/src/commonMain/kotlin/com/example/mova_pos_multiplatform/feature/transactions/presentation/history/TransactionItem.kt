@@ -18,12 +18,14 @@ import com.example.mova_pos_multiplatform.core.common.extension.formatCurrency
 import com.example.mova_pos_multiplatform.core.common.extension.formatDate
 import com.example.mova_pos_multiplatform.core.designsystem.MovaRadius
 import com.example.mova_pos_multiplatform.core.designsystem.MovaSpacing
+import com.example.mova_pos_multiplatform.core.common.extension.getColor
+import com.example.mova_pos_multiplatform.core.common.extension.getTitleToShow
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 
 @Composable
-fun TransactionItem(transaction: Transaction, onItemClicked: (String) -> Unit) {
+fun TransactionItem(transaction: Transaction, onItemClicked: () -> Unit) {
     Card(
-        onClick = { onItemClicked(transaction.idempotencyKey) },
+        onClick = onItemClicked,
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(size = MovaRadius.medium),
         colors = CardDefaults.cardColors(
