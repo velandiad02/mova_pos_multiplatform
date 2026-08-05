@@ -7,6 +7,8 @@ interface TransactionLocalDataSource {
 
     suspend fun getPendingTransactions(terminalId: String): Result<List<Transaction>>
 
+    suspend fun getTransactionsByTerminalId(terminalId: String? = null): Result<List<Transaction>>
+
     suspend fun saveTransaction(transaction: Transaction): Result<Unit>
 
     suspend fun syncTransaction(transaction: Transaction, status: TransactionStatus): Result<Unit>

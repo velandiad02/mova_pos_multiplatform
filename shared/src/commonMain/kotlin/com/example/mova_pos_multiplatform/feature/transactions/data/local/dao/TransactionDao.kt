@@ -11,6 +11,12 @@ import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Tran
 @Dao
 interface TransactionDao {
 
+    @Query(value = "SELECT * FROM transactions")
+    suspend fun getAllTransactions(): List<TransactionEntity>
+
+    @Query(value = "SELECT * FROM transactions WHERE terminalId = :terminalId")
+    suspend fun getTransactionsByTerminalId(terminalId: String): List<TransactionEntity>
+
     @Query(value = "SELECT * FROM transactions WHERE status = :status AND terminalId = :terminalId")
     suspend fun getTransactionsBySyncStatus(status: TransactionStatus, terminalId: String): List<TransactionEntity>
 

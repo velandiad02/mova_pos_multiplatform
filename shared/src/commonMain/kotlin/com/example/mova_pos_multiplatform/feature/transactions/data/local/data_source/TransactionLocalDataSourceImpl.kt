@@ -19,6 +19,14 @@ class TransactionLocalDataSourceImpl(
             ).map { it.toDomain() }
         }
 
+    override suspend fun getTransactionsByTerminalId(terminalId: String?): Result<List<Transaction>> =
+        runLocalCatching {
+            val transactions = terminalId?.let { transactionDao.getTransactionsByTerminalId(terminalId = it) }
+                ?: transactionDao.getTransactionsByTerminalId()
+
+            transactions.map { it.toDomain() }
+        }
+
     override suspend fun saveTransaction(transaction: Transaction): Result<Unit> =
         runLocalCatching {
             transactionDao.saveTransaction(transaction = transaction.toEntity())

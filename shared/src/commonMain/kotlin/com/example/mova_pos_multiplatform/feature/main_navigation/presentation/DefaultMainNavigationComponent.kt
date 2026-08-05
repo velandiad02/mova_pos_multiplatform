@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
+import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.GetTransactionsByTerminalUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.pos_main.DefaultPosMainComponent
 import kotlinx.serialization.Serializable
 
@@ -13,6 +14,7 @@ class DefaultMainNavigationComponent(
     componentContext: ComponentContext,
     private val terminalId: String,
     private val onNavigateToPaymentChannel: (amountInMinimumUnit: Long) -> Unit,
+    private val getTransactionsByTerminalUseCase: GetTransactionsByTerminalUseCase,
 ) : MainNavigationComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<TabConfig>()
@@ -49,6 +51,7 @@ class DefaultMainNavigationComponent(
             DefaultPosMainComponent(
                 componentContext = context,
                 onNavigateToPaymentChannel = onNavigateToPaymentChannel,
+                getTransactionsByTerminalUseCase = getTransactionsByTerminalUseCase,
             )
         )
         is TabConfig.History -> MainNavigationComponent.Child.HistoryPlaceholder

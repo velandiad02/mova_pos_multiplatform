@@ -19,6 +19,11 @@ class TransactionRepositoryImpl(
             localDataSource.getPendingTransactions(terminalId = terminalId)
         }
 
+    override suspend fun getTransactionsByTerminalId(terminalId: String?): Result<List<Transaction>> =
+        withContext(context = ioDispatcher) {
+            localDataSource.getTransactionsByTerminalId(terminalId = terminalId)
+        }
+
     override suspend fun saveTransaction(transaction: Transaction): Result<Unit> =
         withContext(context = ioDispatcher) {
             localDataSource.saveTransaction(transaction = transaction)

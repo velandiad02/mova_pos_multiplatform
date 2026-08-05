@@ -6,6 +6,7 @@ import com.example.mova_pos_multiplatform.feature.commerce_terminal.domain.use_c
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.domain.use_case.SyncTerminalsForCommerceUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.CreateTransactionUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.GenerateReceiptUseCase
+import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.GetTransactionsByTerminalUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.PrintReceptUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.ReadTransactionChannelUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.SyncTransactionsUseCase
@@ -21,6 +22,7 @@ val domainModule = module {
 
     factoryOf(constructor = ::CreateTransactionUseCase)
     factoryOf(constructor = ::GenerateReceiptUseCase)
+    factoryOf(constructor = ::GetTransactionsByTerminalUseCase)
     factoryOf(constructor = ::PrintReceptUseCase)
     factoryOf(constructor = ::ReadTransactionChannelUseCase)
     factoryOf(constructor = ::SyncTransactionsUseCase)

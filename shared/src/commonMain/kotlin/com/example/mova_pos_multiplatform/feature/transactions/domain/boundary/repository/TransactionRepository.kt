@@ -6,6 +6,8 @@ interface TransactionRepository {
 
     suspend fun getPendingTransactions(terminalId: String): Result<List<Transaction>>
 
+    suspend fun getTransactionsByTerminalId(terminalId: String? = null): Result<List<Transaction>>
+
     suspend fun saveTransaction(transaction: Transaction): Result<Unit>
 
     suspend fun updateTransaction(transaction: Transaction): Result<Unit>
