@@ -9,7 +9,7 @@ fun TransactionStatus.getTitleToShow(): String {
     return when (this) {
         TransactionStatus.APPROVED -> "Aprobado"
         TransactionStatus.REJECTED -> "Rechazado"
-        TransactionStatus.PENDING_SYNC -> "Sincronización Pendiente"
+        TransactionStatus.PENDING_SYNC -> "Sinc. Pend."
         TransactionStatus.FAILED -> "Fallido"
     }
 }

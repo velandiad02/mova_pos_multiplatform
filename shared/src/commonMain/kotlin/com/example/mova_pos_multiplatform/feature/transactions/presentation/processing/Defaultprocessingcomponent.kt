@@ -10,6 +10,7 @@ import com.example.mova_pos_multiplatform.core.common.error.ErrorStatus
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.ChannelResult
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Money
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.PaymentChannel
+import com.example.mova_pos_multiplatform.feature.transactions.domain.model.TransactionStatus
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.CreateTransactionUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.ReadTransactionChannelUseCase
 import kotlinx.coroutines.Dispatchers
@@ -62,8 +63,14 @@ class DefaultProcessingComponent(
         )
 
         result.fold(
-            onSuccess = {
-                showSuccessAndFinish(message = "Pago aprobado")
+            onSuccess = { status ->
+                if (status != TransactionStatus.REJECTED) {
+                    showSuccessAndFinish(message = "Pago aprobado")
+                } else {
+                    _model.value = ProcessingComponent.Model.Error(
+                        message = "El pago ha sido rechazado",
+                    )
+                }
             },
             onFailure = { exception ->
                 val status = (exception as? AppException)?.status

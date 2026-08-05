@@ -19,7 +19,7 @@ class CreateTransactionUseCase(
         terminalId: String,
         amountInMinimumUnit: Long,
         channel: PaymentChannel,
-    ): Result<Unit> {
+    ): Result<TransactionStatus> {
         val transaction = createInstanceOfTransaction(
             terminalId = terminalId,
             amountInMinimumUnit = amountInMinimumUnit,
@@ -34,7 +34,7 @@ class CreateTransactionUseCase(
         )
     }
 
-    suspend fun syncTransaction(transaction: Transaction): Result<Unit> {
+    suspend fun syncTransaction(transaction: Transaction): Result<TransactionStatus> {
         val syncResult = transactionRepository.syncTransaction(
             transaction = transaction,
             mustSaveErrors = false,
@@ -43,7 +43,7 @@ class CreateTransactionUseCase(
         return syncResult.fold(
             onSuccess = {
                 scheduler.launchScheduler(terminalId = transaction.terminalId)
-                Result.success(value = Unit)
+                Result.success(value = it)
             },
             onFailure = {
                 if ((it as? AppException)?.status == ErrorStatus.RETRYABLE) {

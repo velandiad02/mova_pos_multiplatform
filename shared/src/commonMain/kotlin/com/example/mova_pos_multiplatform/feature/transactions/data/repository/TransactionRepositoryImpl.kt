@@ -41,12 +41,13 @@ class TransactionRepositoryImpl(
     override suspend fun syncTransaction(
         transaction: Transaction,
         mustSaveErrors: Boolean,
-    ): Result<Unit> = withContext(context = ioDispatcher) {
+    ): Result<TransactionStatus> = withContext(context = ioDispatcher) {
         val result = remoteDatasource.createTransaction(transaction = transaction)
 
         result.fold(
             onSuccess = {
                 localDataSource.syncTransaction(transaction = transaction, status = it)
+                Result.success(value = it)
             },
             onFailure = {
                 if (mustSaveErrors) {
