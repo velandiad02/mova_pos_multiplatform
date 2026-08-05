@@ -12,7 +12,6 @@ import com.example.mova_pos_multiplatform.feature.commerce_terminal.presentation
 import com.example.mova_pos_multiplatform.feature.main_navigation.presentation.DefaultMainNavigationComponent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.payment_channel.DefaultPaymentChannelComponent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.processing.DefaultProcessingComponent
-import com.example.mova_pos_multiplatform.feature.transactions.presentation.history.DefaultHistoryComponent
 import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -54,6 +53,8 @@ class DefaultRootComponent(
             DefaultMainNavigationComponent(
                 componentContext = context,
                 terminalId = config.terminalId,
+                getTransactionsByTerminalUseCase = get(),
+                retrySyncTransactionsUseCase = get(),
                 onNavigateToPaymentChannel = { amountInMinimumUnit ->
                     navigation.pushNew(
                         Config.PaymentChannel(
@@ -96,15 +97,6 @@ class DefaultRootComponent(
                 },
             )
         )
-//        is Config.History -> RootComponent.Child.History(
-//            component = DefaultHistoryComponent(
-//                componentContext = context,
-//                terminalId = config.terminalId,
-//                observeTransactionsUseCase = get(),
-//                retrySyncTransactionsUseCase = get(),
-//                onNavigateToDetail = { },
-//            )
-//        )
     }
 
     @Serializable
@@ -124,8 +116,5 @@ class DefaultRootComponent(
             val amountInMinimumUnit: Long,
             val channel: com.example.mova_pos_multiplatform.feature.transactions.domain.model.PaymentChannel,
         ) : Config()
-
-//        @Serializable
-//        data class History(val terminalId: String) : Config()
     }
 }

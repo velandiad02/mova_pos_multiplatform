@@ -2,6 +2,7 @@ package com.example.mova_pos_multiplatform.feature.main_navigation.presentation
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import com.example.mova_pos_multiplatform.feature.transactions.presentation.history.HistoryComponent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.pos_main.PosMainComponent
 
 interface MainNavigationComponent {
@@ -18,6 +19,6 @@ interface MainNavigationComponent {
 
     sealed class Child {
         class PosMain(val component: PosMainComponent) : Child()
-        data object HistoryPlaceholder : Child()
+        data class History(val component: HistoryComponent) : Child()
     }
 }

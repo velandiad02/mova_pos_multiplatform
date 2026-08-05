@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.example.mova_pos_multiplatform.core.designsystem.MovaResponsive
+import com.example.mova_pos_multiplatform.feature.transactions.presentation.history.HistoryContent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.pos_main.PosMainContent
 
 @Composable
@@ -35,7 +36,7 @@ fun MainNavigationContent(component: MainNavigationComponent) {
         is MainNavigationComponent.Child.PosMain ->
             MainNavigationComponent.Tab.CASH_REGISTER
 
-        MainNavigationComponent.Child.HistoryPlaceholder ->
+        is MainNavigationComponent.Child.History ->
             MainNavigationComponent.Tab.HISTORY
     }
 
@@ -123,12 +124,7 @@ fun MainNavigationContent(component: MainNavigationComponent) {
 private fun TabChildContent(child: MainNavigationComponent.Child) {
     when (child) {
         is MainNavigationComponent.Child.PosMain -> PosMainContent(child.component)
-
-        // TODO: reemplazar por HistoryContent(component)
-        MainNavigationComponent.Child.HistoryPlaceholder -> Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) { Text("Vista Historial (pendiente)") }
+        is MainNavigationComponent.Child.History -> HistoryContent(child.component)
     }
 }
 

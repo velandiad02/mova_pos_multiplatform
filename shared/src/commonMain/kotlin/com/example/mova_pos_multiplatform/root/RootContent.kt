@@ -8,7 +8,6 @@ import com.example.mova_pos_multiplatform.feature.commerce_terminal.presentation
 import com.example.mova_pos_multiplatform.feature.main_navigation.presentation.MainNavigationContent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.payment_channel.PaymentChannelContent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.processing.ProcessingContent
-import com.example.mova_pos_multiplatform.feature.transactions.presentation.history.HistoryContent
 
 @Composable
 fun RootContent(component: RootComponent) {
@@ -20,7 +19,6 @@ fun RootContent(component: RootComponent) {
             is RootComponent.Child.MainNavigation -> MainNavigationContent(instance.component)
             is RootComponent.Child.PaymentChannel -> PaymentChannelContent(instance.component)
             is RootComponent.Child.Processing -> ProcessingContent(instance.component)
-//            is RootComponent.Child.History -> HistoryContent(instance.component)
         }
     }
 }

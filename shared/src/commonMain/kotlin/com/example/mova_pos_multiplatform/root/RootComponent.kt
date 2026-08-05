@@ -6,7 +6,6 @@ import com.example.mova_pos_multiplatform.feature.commerce_terminal.presentation
 import com.example.mova_pos_multiplatform.feature.main_navigation.presentation.MainNavigationComponent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.payment_channel.PaymentChannelComponent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.processing.ProcessingComponent
-import com.example.mova_pos_multiplatform.feature.transactions.presentation.history.HistoryComponent
 
 interface RootComponent {
 
@@ -18,6 +17,5 @@ interface RootComponent {
         class MainNavigation(val component: MainNavigationComponent) : Child()
         class PaymentChannel(val component: PaymentChannelComponent) : Child()
         class Processing(val component: ProcessingComponent) : Child()
-//        class History(val component: HistoryComponent) : Child()
     }
 }
