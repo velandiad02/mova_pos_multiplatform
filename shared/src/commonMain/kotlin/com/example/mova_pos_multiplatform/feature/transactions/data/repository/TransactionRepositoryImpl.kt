@@ -5,6 +5,7 @@ import com.example.mova_pos_multiplatform.feature.transactions.data.remote.data_
 import com.example.mova_pos_multiplatform.feature.transactions.domain.boundary.repository.TransactionRepository
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.TransactionStatus
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
@@ -18,6 +19,9 @@ class TransactionRepositoryImpl(
         withContext(context = ioDispatcher) {
             localDataSource.getPendingTransactions(terminalId = terminalId)
         }
+
+    override fun observeTransactionsByTerminalId(terminalId: String): Flow<List<Transaction>> =
+        localDataSource.observeTransactionsByTerminalId(terminalId = terminalId)
 
     override suspend fun saveTransaction(transaction: Transaction): Result<Unit> =
         withContext(context = ioDispatcher) {

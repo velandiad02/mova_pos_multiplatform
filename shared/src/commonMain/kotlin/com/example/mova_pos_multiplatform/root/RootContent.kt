@@ -5,6 +5,9 @@ import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.presentation.CommerceTerminalContent
+import com.example.mova_pos_multiplatform.feature.main_navigation.presentation.MainNavigationContent
+import com.example.mova_pos_multiplatform.feature.transactions.presentation.payment_channel.PaymentChannelContent
+import com.example.mova_pos_multiplatform.feature.transactions.presentation.processing.ProcessingContent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.detail.TransactionDetailContent
 
 @Composable
@@ -14,7 +17,9 @@ fun RootContent(component: RootComponent) {
     Children(stack = stack) { child ->
         when (val instance = child.instance) {
             is RootComponent.Child.CommerceTerminal -> CommerceTerminalContent(instance.component)
-            // is RootComponent.Child.History -> HistoryContent(instance.component)
+            is RootComponent.Child.MainNavigation -> MainNavigationContent(instance.component)
+            is RootComponent.Child.PaymentChannel -> PaymentChannelContent(instance.component)
+            is RootComponent.Child.Processing -> ProcessingContent(instance.component)
 //            is RootComponent.Child.TransactionDetail -> TransactionDetailContent(instance.component)
         }
     }
