@@ -53,6 +53,8 @@ class DefaultRootComponent(
             DefaultMainNavigationComponent(
                 componentContext = context,
                 terminalId = config.terminalId,
+                getTransactionsByTerminalUseCase = get(),
+                retrySyncTransactionsUseCase = get(),
                 onNavigateToPaymentChannel = { amountInMinimumUnit ->
                     navigation.pushNew(
                         Config.PaymentChannel(
