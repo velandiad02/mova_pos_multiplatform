@@ -16,12 +16,18 @@ class DefaultPosMainComponent(
     override fun onAmountInputChanged(rawInput: String) {
         val digitsOnly = rawInput.filter { it.isDigit() }
 
-        val amount = digitsOnly
+        val amountInCents = digitsOnly
             .toLongOrNull()
+            ?.times(CENTS_IN_CURRENCY_UNIT)
             ?.coerceAtMost(MAX_AMOUNT_IN_MINIMUM_UNIT)
             ?: 0L
 
-        _model.update { it.copy(amountInMinimumUnit = amount) }
+        _model.update {
+            it.copy(
+                amountInMinimumUnit = amountInCents,
+                rawAmountText = digitsOnly,
+            )
+        }
     }
 
     override fun onContinueClicked() {
@@ -31,6 +37,7 @@ class DefaultPosMainComponent(
     }
 
     private companion object {
+        const val CENTS_IN_CURRENCY_UNIT = 100L
         const val MAX_AMOUNT_IN_MINIMUM_UNIT = 999_999_999L
     }
 }

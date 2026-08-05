@@ -25,7 +25,7 @@ import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Mone
 @Composable
 fun PosMainContent(component: PosMainComponent) {
     val model by component.model.subscribeAsState()
-    val formattedAmount = Money(amountInMinimumUnit = model.amountInMinimumUnit * 100).formatCurrency()
+    val formattedAmount = Money(amountInMinimumUnit = model.amountInMinimumUnit).formatCurrency()
 
     MovaResponsive { windowSize ->
         MovaScreenScaffold(windowSize = windowSize, title = "Caja") {
@@ -40,7 +40,7 @@ fun PosMainContent(component: PosMainComponent) {
                 )
 
                 MovaAmountField(
-                    value = if (model.amountInMinimumUnit == 0L) "" else model.amountInMinimumUnit.toString(),
+                    value = model.rawAmountText,
                     onValueChange = component::onAmountInputChanged,
                     label = "Monto a cobrar",
                     modifier = Modifier.fillMaxWidth(),

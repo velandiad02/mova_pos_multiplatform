@@ -8,6 +8,7 @@ interface PosMainComponent {
 
     data class Model(
         val amountInMinimumUnit: Long = 0,
+        val rawAmountText: String = "",
         val isOnline: Boolean = true,
     ) {
         val canContinue: Boolean
