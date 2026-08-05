@@ -1,6 +1,7 @@
 package com.example.mova_pos_multiplatform.feature.transactions.domain.boundary.repository
 
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
+import com.example.mova_pos_multiplatform.feature.transactions.domain.model.TransactionStatus
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
@@ -15,5 +16,5 @@ interface TransactionRepository {
 
     suspend fun unMarkTransactionsAsFailed(terminalId: String): Result<Unit>
 
-    suspend fun syncTransaction(transaction: Transaction, mustSaveErrors: Boolean): Result<Unit>
+    suspend fun syncTransaction(transaction: Transaction, mustSaveErrors: Boolean): Result<TransactionStatus>
 }
