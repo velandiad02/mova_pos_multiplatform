@@ -7,6 +7,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.presentation.CommerceTerminalContent
 import com.example.mova_pos_multiplatform.feature.main_navigation.presentation.MainNavigationContent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.payment_channel.PaymentChannelContent
+import com.example.mova_pos_multiplatform.feature.transactions.presentation.processing.ProcessingContent
 
 @Composable
 fun RootContent(component: RootComponent) {
@@ -17,6 +18,7 @@ fun RootContent(component: RootComponent) {
             is RootComponent.Child.CommerceTerminal -> CommerceTerminalContent(instance.component)
             is RootComponent.Child.MainNavigation -> MainNavigationContent(instance.component)
             is RootComponent.Child.PaymentChannel -> PaymentChannelContent(instance.component)
+            is RootComponent.Child.Processing -> ProcessingContent(instance.component)
         }
     }
 }

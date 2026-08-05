@@ -23,6 +23,7 @@ object MovaStatusColors {
     val completed = MovaSuccess
     val pendingSync = MovaWarning
     val failed = MovaError
+
 }
 
 private val LightColors = lightColorScheme(
