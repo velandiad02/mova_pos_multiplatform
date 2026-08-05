@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
+import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.GetTransactionsByTerminalUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.RetryPendingTransactionsUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.history.DefaultHistoryComponent
@@ -15,9 +16,10 @@ import kotlinx.serialization.Serializable
 class DefaultMainNavigationComponent(
     componentContext: ComponentContext,
     private val terminalId: String,
-    private val onNavigateToPaymentChannel: (amountInMinimumUnit: Long) -> Unit,
     private val getTransactionsByTerminalUseCase: GetTransactionsByTerminalUseCase,
     private val retrySyncTransactionsUseCase: RetryPendingTransactionsUseCase,
+    private val onNavigateToPaymentChannel: (amountInMinimumUnit: Long) -> Unit,
+    private val onNavigateToTransactionDetail: (Transaction) -> Unit,
 ) : MainNavigationComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<TabConfig>()
@@ -62,7 +64,9 @@ class DefaultMainNavigationComponent(
                 terminalId = terminalId,
                 observeTransactionsUseCase = getTransactionsByTerminalUseCase,
                 retrySyncTransactionsUseCase = retrySyncTransactionsUseCase,
-                onNavigateToDetail = { },
+                onNavigateToDetail = { transaction ->
+                    onNavigateToTransactionDetail(transaction)
+                },
             )
         )
     }

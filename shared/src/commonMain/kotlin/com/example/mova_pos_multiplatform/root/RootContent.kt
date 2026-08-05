@@ -20,7 +20,7 @@ fun RootContent(component: RootComponent) {
             is RootComponent.Child.MainNavigation -> MainNavigationContent(instance.component)
             is RootComponent.Child.PaymentChannel -> PaymentChannelContent(instance.component)
             is RootComponent.Child.Processing -> ProcessingContent(instance.component)
-//            is RootComponent.Child.TransactionDetail -> TransactionDetailContent(instance.component)
+            is RootComponent.Child.TransactionDetail -> TransactionDetailContent(instance.component)
         }
     }
 }

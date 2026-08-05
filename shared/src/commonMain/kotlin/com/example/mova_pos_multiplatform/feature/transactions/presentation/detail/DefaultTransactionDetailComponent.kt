@@ -6,38 +6,26 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.PrinterResult
+import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.GenerateReceiptUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.PrintReceptUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class DefaultTransactionDetailComponent(
     componentContext: ComponentContext,
-    private val transactionId: String,
-//    private val observeTransactionDetailUseCase: ObserveTransactionDetailUseCase,
+    private val transaction: Transaction,
     private val generateReceiptUseCase: GenerateReceiptUseCase,
     private val printReceiptUseCase: PrintReceptUseCase,
+    private val onNavigateBack: () -> Unit,
 ) : TransactionDetailComponent, ComponentContext by componentContext {
 
     private val scope = coroutineScope(context = Dispatchers.Main.immediate)
-    private var observeJob: Job? = null
 
-    private val _model = MutableValue(initialValue = TransactionDetailComponent.Model())
+    private val _model = MutableValue(
+        initialValue = TransactionDetailComponent.Model(transaction = transaction),
+    )
     override val model: Value<TransactionDetailComponent.Model> = _model
-
-    init {
-        loadTransaction()
-    }
-
-    private fun loadTransaction() {
-        observeJob?.cancel()
-        observeJob = scope.launch {
-//            observeTransactionDetailUseCase(transactionId).collect { transaction ->
-//                _model.update { it.copy(transaction = transaction, isLoading = false) }
-//            }
-        }
-    }
 
     override fun onPrintReceiptClicked() {
         val currentTransaction = _model.value.transaction ?: return
@@ -78,5 +66,9 @@ class DefaultTransactionDetailComponent(
                 }
             }
         }
+    }
+
+    override fun onBackClicked() {
+        onNavigateBack()
     }
 }

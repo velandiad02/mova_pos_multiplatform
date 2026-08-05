@@ -18,6 +18,6 @@ interface RootComponent {
         class MainNavigation(val component: MainNavigationComponent) : Child()
         class PaymentChannel(val component: PaymentChannelComponent) : Child()
         class Processing(val component: ProcessingComponent) : Child()
-//        class TransactionDetail(val component: TransactionDetailComponent) : Child()
+        class TransactionDetail(val component: TransactionDetailComponent) : Child()
     }
 }

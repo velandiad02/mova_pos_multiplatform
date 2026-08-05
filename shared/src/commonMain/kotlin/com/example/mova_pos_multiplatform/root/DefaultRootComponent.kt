@@ -10,6 +10,7 @@ import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.presentation.DefaultCommerceTerminalComponent
 import com.example.mova_pos_multiplatform.feature.main_navigation.presentation.DefaultMainNavigationComponent
+import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.payment_channel.DefaultPaymentChannelComponent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.processing.DefaultProcessingComponent
 import com.example.mova_pos_multiplatform.feature.transactions.presentation.detail.DefaultTransactionDetailComponent
@@ -64,6 +65,11 @@ class DefaultRootComponent(
                         )
                     )
                 },
+                onNavigateToTransactionDetail = { transaction ->
+                    navigation.pushNew(
+                        configuration = Config.TransactionDetail(transaction = transaction)
+                    )
+                }
             )
         )
 
@@ -98,15 +104,15 @@ class DefaultRootComponent(
                 },
             )
         )
-        //        is RootComponent.Child.Config.TransactionDetail -> TransactionDetail(
-//            component = DefaultTransactionDetailComponent(
-//                componentContext = context,
-//                transactionId = "id",
-//                observeTransactionDetailUseCase = get(),
-//                generateReceiptUseCase = get(),
-//                printReceiptUseCase = get(),
-//            )
-//        )
+        is Config.TransactionDetail -> RootComponent.Child.TransactionDetail(
+            component = DefaultTransactionDetailComponent(
+                componentContext = context,
+                transaction = config.transaction,
+                generateReceiptUseCase = get(),
+                printReceiptUseCase = get(),
+                onNavigateBack = { navigation.pop() }
+            )
+        )
     }
 
     @Serializable
@@ -127,7 +133,7 @@ class DefaultRootComponent(
             val channel: com.example.mova_pos_multiplatform.feature.transactions.domain.model.PaymentChannel,
         ) : Config()
 
-//        @Serializable
-//        data object TransactionDetail : Config()
+        @Serializable
+        data class TransactionDetail(val transaction: Transaction) : Config()
     }
 }

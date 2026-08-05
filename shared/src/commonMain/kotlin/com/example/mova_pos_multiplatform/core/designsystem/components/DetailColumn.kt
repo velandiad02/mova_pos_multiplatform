@@ -1,7 +1,7 @@
 package com.example.mova_pos_multiplatform.core.designsystem.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun DetailRow(label: String, value: String) {
-    Row(
+fun DetailColumn(label: String, value: String) {
+    Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
             text = label,

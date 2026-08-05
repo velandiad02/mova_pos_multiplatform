@@ -1,4 +1,4 @@
-package com.example.mova_pos_multiplatform.feature.transactions.presentation.history
+package com.example.mova_pos_multiplatform.core.common.extension
 
 import androidx.compose.ui.graphics.Color
 import com.example.mova_pos_multiplatform.core.designsystem.MovaStatusColors

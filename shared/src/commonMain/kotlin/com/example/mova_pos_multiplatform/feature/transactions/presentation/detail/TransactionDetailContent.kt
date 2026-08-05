@@ -3,9 +3,10 @@ package com.example.mova_pos_multiplatform.feature.transactions.presentation.det
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,20 +30,21 @@ fun TransactionDetailContent(component: TransactionDetailComponent) {
     MovaResponsive { windowSize ->
         MovaScreenScaffold(
             windowSize = windowSize,
-            title = "Detalle de Transacción",
+            title = "Detalle",
+            onBackClicked = component::onBackClicked,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 if (model.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 } else {
                     model.transaction?.let { transaction ->
+                        val scrollState = rememberScrollState()
+
                         Column(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxSize().verticalScroll(scrollState),
                             verticalArrangement = Arrangement.spacedBy(MovaSpacing.md),
                         ) {
                             TransactionInfoCard(transaction = transaction)
-
-                            Spacer(modifier = Modifier.weight(1f))
 
                             model.printerMessage?.let { message ->
                                 Text(
@@ -62,6 +64,7 @@ fun TransactionDetailContent(component: TransactionDetailComponent) {
                                     text = "Imprimir Recibo",
                                     onClick = component::onPrintReceiptClicked,
                                     loading = model.isPrinting,
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
                                 )
                             }
                         }

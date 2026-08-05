@@ -5,9 +5,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +30,7 @@ fun MovaScreenScaffold(
     windowSize: MovaWindowSize,
     title: String? = null,
     modifier: Modifier = Modifier,
+    onBackClicked: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
@@ -46,6 +52,16 @@ fun MovaScreenScaffold(
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth(),
                     )
+                },
+                navigationIcon = {
+                    if (onBackClicked != null) {
+                        IconButton(onClick = onBackClicked) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Volver",
+                            )
+                        }
+                    }
                 },
                 actions = { actions() },
             )

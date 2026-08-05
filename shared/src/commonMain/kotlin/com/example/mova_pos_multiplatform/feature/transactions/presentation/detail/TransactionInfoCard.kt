@@ -15,23 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.example.mova_pos_multiplatform.core.designsystem.components.DetailRow
+import com.example.mova_pos_multiplatform.core.designsystem.components.DetailColumn
 import com.example.mova_pos_multiplatform.core.common.extension.formatCurrency
 import com.example.mova_pos_multiplatform.core.common.extension.formatDate
 import com.example.mova_pos_multiplatform.core.designsystem.MovaRadius
 import com.example.mova_pos_multiplatform.core.designsystem.MovaSpacing
-import com.example.mova_pos_multiplatform.core.designsystem.MovaStatusColors
 import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Transaction
-import com.example.mova_pos_multiplatform.feature.transactions.domain.model.TransactionStatus
+import com.example.mova_pos_multiplatform.core.common.extension.getColor
+import com.example.mova_pos_multiplatform.core.common.extension.getTitleToShow
 
 @Composable
 fun TransactionInfoCard(transaction: Transaction) {
-    val statusColor = when (transaction.status) {
-        TransactionStatus.APPROVED -> MovaStatusColors.completed
-        TransactionStatus.REJECTED, TransactionStatus.FAILED -> MovaStatusColors.failed
-        TransactionStatus.PENDING_SYNC -> MovaStatusColors.pendingSync
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,9 +45,9 @@ fun TransactionInfoCard(transaction: Transaction) {
 
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
-        DetailRow(label = "Referencia", value = transaction.idempotencyKey)
-        DetailRow(label = "Fecha", value = transaction.createdAt.formatDate())
-        DetailRow(label = "Método de Pago", value = transaction.channel.name)
+        DetailColumn(label = "Referencia", value = transaction.idempotencyKey)
+        DetailColumn(label = "Fecha", value = transaction.createdAt.formatDate())
+        DetailColumn(label = "Método de Pago", value = transaction.channel.getTitleToShow())
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -65,9 +59,9 @@ fun TransactionInfoCard(transaction: Transaction) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                text = transaction.status.name,
+                text = transaction.status.getTitleToShow(),
                 style = MaterialTheme.typography.labelLarge,
-                color = statusColor,
+                color = transaction.status.getColor(),
                 fontWeight = FontWeight.Bold,
             )
         }

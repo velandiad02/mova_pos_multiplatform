@@ -8,11 +8,12 @@ interface TransactionDetailComponent {
 
     data class Model(
         val transaction: Transaction? = null,
-        val isLoading: Boolean = true,
+        val isLoading: Boolean = false,
         val isPrinting: Boolean = false,
         val printerMessage: String? = null,
         val isPrintError: Boolean = false,
     )
 
     fun onPrintReceiptClicked()
+    fun onBackClicked()
 }

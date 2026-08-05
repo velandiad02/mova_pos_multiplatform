@@ -28,7 +28,7 @@ fun HistoryContent(component: HistoryComponent) {
     MovaResponsive { windowSize ->
         MovaScreenScaffold(
             windowSize = windowSize,
-            title = "Historial de transacciones",
+            title = "Historial",
             actions = {
                 if (model.hasFailedTransactions) {
                     MovaIconButton(
@@ -76,7 +76,9 @@ fun HistoryContent(component: HistoryComponent) {
                         ) { transaction ->
                             TransactionItem(
                                 transaction = transaction,
-                                onItemClicked = component::onTransactionClicked,
+                                onItemClicked = {
+                                    component.onTransactionClicked(transaction)
+                                },
                             )
                         }
                     }
