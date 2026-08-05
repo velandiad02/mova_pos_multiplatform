@@ -36,7 +36,7 @@ import com.example.mova_pos_multiplatform.feature.transactions.domain.model.Paym
 @Composable
 fun PaymentChannelContent(component: PaymentChannelComponent) {
     val model by component.model.subscribeAsState()
-    val formattedAmount = Money(amountInMinimumUnit = model.amountInMinimumUnit * 100).formatCurrency()
+    val formattedAmount = Money(amountInMinimumUnit = model.amountInMinimumUnit).formatCurrency()
 
     MovaResponsive { windowSize ->
         MovaScreenScaffold(windowSize = windowSize, title = "Selecciona el canal de cobro") {
