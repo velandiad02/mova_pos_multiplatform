@@ -92,7 +92,9 @@ shared/           # Código compartido KMP
 
 El alcance actual se ha definido para Android y Desktop porque responde a los escenarios operativos más relevantes del flujo POS: dispositivos Android para interacción de ventas y estaciones Desktop para entornos de caja o administración. Esta decisión permite enfocar el esfuerzo de desarrollo en plataformas con mayor impacto para el negocio, reducir la complejidad de mantenimiento y evitar extender el proyecto a otras plataformas antes de validar el producto en los entornos objetivo.
 
-Para validar el desarrollo se priorizan emuladores o dispositivos físicos Android con distintas resoluciones y versiones del sistema, además de entornos locales de Windows y otras estaciones compatibles con JVM. La política offline es de tipo local-first: cuando no hay conectividad, la app debe seguir siendo usable para capturar, guardar y consultar información relevante en almacenamiento local, registrando operaciones críticas y sincronizándolas cuando la red vuelva a estar disponible.
+Para validar el desarrollo se priorizan emuladores o dispositivos físicos Android con distintas resoluciones y versiones del sistema, además de entornos locales de Windows y otras estaciones compatibles con JVM.
+
+La aplicación implementa una estrategia offline-first para la gestión de datos. La información se obtiene inicialmente desde la base de datos local, lo que permite una respuesta rápida y el funcionamiento sin conexión. Posteriormente, cuando existe conectividad, los datos se sincronizan con los servicios externos para mantener la información actualizada. En el caso de las transacciones, si no es posible enviarlas al backend, estas se almacenan localmente con un estado de sincronización pendiente y son procesadas automáticamente mediante WorkManager en Android y un Scheduler en Desktop cuando la conexión se restablece, actualizando su estado una vez completada la sincronización.
 
 
 ## ⚠️ Limitaciones y consideraciones
