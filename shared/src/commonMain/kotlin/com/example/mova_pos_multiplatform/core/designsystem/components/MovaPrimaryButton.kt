@@ -1,8 +1,7 @@
 package com.example.mova_pos_multiplatform.core.designsystem.components
 
-
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -31,12 +30,16 @@ fun MovaPrimaryButton(
         shape = RoundedCornerShape(12.dp),
     ) {
         if (loading) {
-            CircularProgressIndicator(modifier = Modifier.height(MovaSpacing.md))
+            CircularProgressIndicator(
+                modifier = Modifier.size(MovaSpacing.md),
+                strokeWidth = 2.dp,
+            )
         } else {
-            Text(text,
+            Text(
+                text = text,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
-                )
+            )
         }
     }
 }

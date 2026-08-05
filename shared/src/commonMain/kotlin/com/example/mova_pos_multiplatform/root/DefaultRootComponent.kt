@@ -6,6 +6,8 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import com.example.mova_pos_multiplatform.feature.commerce_terminal.presentation.DefaultCommerceTerminalComponent
+import com.example.mova_pos_multiplatform.feature.transactions.presentation.detail.DefaultTransactionDetailComponent
+import com.example.mova_pos_multiplatform.root.RootComponent.Child.*
 import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -30,7 +32,7 @@ class DefaultRootComponent(
         config: Config,
         context: ComponentContext,
     ): RootComponent.Child = when (config) {
-        is Config.CommerceTerminal -> RootComponent.Child.CommerceTerminal(
+        is Config.CommerceTerminal -> CommerceTerminal(
             DefaultCommerceTerminalComponent(
                 componentContext = context,
                 observeCommerces = get(),
@@ -41,6 +43,15 @@ class DefaultRootComponent(
                 },
             )
         )
+//        is Config.TransactionDetail -> TransactionDetail(
+//            component = DefaultTransactionDetailComponent(
+//                componentContext = context,
+//                transactionId = "id",
+//                observeTransactionDetailUseCase = get(),
+//                generateReceiptUseCase = get(),
+//                printReceiptUseCase = get(),
+//            )
+//        )
     }
     @Serializable
     private sealed class Config {
@@ -49,5 +60,8 @@ class DefaultRootComponent(
 
         // @Serializable
         // data object History : Config()
+
+//        @Serializable
+//        data object TransactionDetail : Config()
     }
 }
