@@ -15,18 +15,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-
 class DefaultCommerceTerminalComponent(
     componentContext: ComponentContext,
     private val observeCommerces: ObserveCommercesUseCase,
     private val observeTerminalsByCommerceId: ObserveTerminalsByCommerceIdUseCase,
     private val refreshCommerces: RefreshCommercesUseCase,
     private val syncTerminalsForCommerce: SyncTerminalsForCommerceUseCase,
-    private val onNavigateToHistory: () -> Unit,
+    private val onNavigateToMainNavigation: (terminalId: String) -> Unit,
 ) : CommerceTerminalComponent, ComponentContext by componentContext {
 
     private val scope = coroutineScope(Dispatchers.Main.immediate)
-
     private var observeTerminalsJob: Job? = null
 
     private val _model = MutableValue(CommerceTerminalComponent.Model(isRefreshing = true))
@@ -36,7 +34,6 @@ class DefaultCommerceTerminalComponent(
         observeCommercesReactively()
         refreshCommerces(forceRefresh = false)
     }
-
 
     private fun observeCommercesReactively() {
         scope.launch {
@@ -50,9 +47,7 @@ class DefaultCommerceTerminalComponent(
         _model.update { it.copy(isRefreshing = true, errorMessage = null) }
         scope.launch {
             refreshCommerces.invoke(forceRefresh = forceRefresh)
-                .onSuccess {
-                    _model.update { it.copy(isRefreshing = false) }
-                }
+                .onSuccess { _model.update { it.copy(isRefreshing = false) } }
                 .onFailure { error ->
                     _model.update {
                         it.copy(isRefreshing = false, errorMessage = error.message ?: "Error al cargar comercios")
@@ -87,9 +82,7 @@ class DefaultCommerceTerminalComponent(
         _model.update { it.copy(isSyncingTerminals = true, errorMessage = null) }
         scope.launch {
             syncTerminalsForCommerce(commerceId = commerceId)
-                .onSuccess {
-                    _model.update { it.copy(isSyncingTerminals = false) }
-                }
+                .onSuccess { _model.update { it.copy(isSyncingTerminals = false) } }
                 .onFailure { error ->
                     _model.update {
                         it.copy(isSyncingTerminals = false, errorMessage = error.message ?: "Error al sincronizar terminales")
@@ -103,8 +96,11 @@ class DefaultCommerceTerminalComponent(
     }
 
     override fun onStartCashRegisterClicked() {
-        if (!model.value.canStart) return
-        onNavigateToHistory()
+        val state = model.value
+        val terminal = state.selectedTerminal
+        if (!state.canStart || terminal == null) return
+
+        onNavigateToMainNavigation(terminal.id)
     }
 
     override fun onRetryClicked() {
