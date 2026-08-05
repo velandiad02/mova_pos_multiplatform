@@ -9,6 +9,7 @@ import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.G
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.GetTransactionsByTerminalUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.PrintReceptUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.ReadTransactionChannelUseCase
+import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.RetryPendingTransactionsUseCase
 import com.example.mova_pos_multiplatform.feature.transactions.domain.use_case.SyncTransactionsUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -25,5 +26,6 @@ val domainModule = module {
     factoryOf(constructor = ::GetTransactionsByTerminalUseCase)
     factoryOf(constructor = ::PrintReceptUseCase)
     factoryOf(constructor = ::ReadTransactionChannelUseCase)
+    factoryOf(constructor = ::RetryPendingTransactionsUseCase)
     factoryOf(constructor = ::SyncTransactionsUseCase)
 }
